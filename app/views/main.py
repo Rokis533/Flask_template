@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.forms.main import ProfileForm
 from app.extensions import db
+from app.utils.decorators import admin_required
 
 bp = Blueprint('main', __name__)
 
@@ -30,7 +31,7 @@ def profile():
 
 
 @bp.route('/dashboard')
-@login_required
+@admin_required
 def dashboard():
     """User dashboard"""
     return render_template('dashboard.html', title='Dashboard')
