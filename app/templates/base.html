@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <title>{% if title %}{{ title }} - {% endif %}Dashboard</title>
+
+    <!-- Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{{ url_for('main.index') }}" class="nav-brand">Dashboard</a>
+
+        <ul class="nav-menu">
+          <li>
+            <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
+          </li>
+          {% if current_user.is_authenticated %}
+          <li>
+            <a href="{{ url_for('main.dashboard') }}" class="nav-link"
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('main.profile') }}" class="nav-link">Profile</a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.logout') }}" class="nav-link"
+              >Logout ({{ current_user.username }})</a
+            >
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ url_for('auth.login') }}" class="nav-link">Sign In</a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.register') }}" class="nav-link"
+              >Register</a
+            >
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="messages">
+        {% for category, message in messages %}
+        <div class="message message-{{ category }}">
+          {{ message }}
+          <span class="message-close">&times;</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2024 Dashboard. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

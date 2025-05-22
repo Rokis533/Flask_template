@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block content %}
+<div class="dashboard">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back, {{ current_user.full_name }}!</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <h3>Profile</h3>
+      <p>Manage your account settings and personal information.</p>
+      <a href="{{ url_for('main.profile') }}" class="btn btn-primary"
+        >Edit Profile</a
+      >
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Activity</h3>
+      <p>View your recent activity and usage statistics.</p>
+      <button class="btn btn-secondary" disabled>Coming Soon</button>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Settings</h3>
+      <p>Configure your preferences and account settings.</p>
+      <button class="btn btn-secondary" disabled>Coming Soon</button>
+    </div>
+  </div>
+
+  <div class="user-info">
+    <h3>Account Information</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <strong>Username:</strong>
+        <span>{{ current_user.username }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Email:</strong>
+        <span>{{ current_user.email }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Member Since:</strong>
+        <span>{{ current_user.created_at.strftime('%B %d, %Y') }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Last Updated:</strong>
+        {% if current_user.updated_at %}
+        <span
+          >{{ current_user.updated_at.strftime('%B %d, %Y at %I:%M %p') }}</span
+        >
+        {% else %}
+        <span>Never updated</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block content %}
+<div class="hero-section">
+  <h1>Welcome</h1>
+  <p>Your personal dashboard</p>
+
+  {% if not current_user.is_authenticated %}
+  <div class="hero-buttons">
+    <a href="{{ url_for('auth.register') }}" class="btn btn-primary"
+      >Get Started</a
+    >
+    <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Sign In</a>
+  </div>
+  {% else %}
+  <div class="hero-buttons">
+    <p>Welcome back, {{ current_user.full_name }}!</p>
+    <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary"
+      >View Dashboard</a
+    >
+  </div>
+  {% endif %}
+</div>
+
+<div class="features">
+  <div class="feature-card">
+    <h3>Dashboard</h3>
+    <p>Access your personal dashboard and manage your account</p>
+  </div>
+  <div class="feature-card">
+    <h3>Profile</h3>
+    <p>Update your personal information and preferences</p>
+  </div>
+  <div class="feature-card">
+    <h3>Security</h3>
+    <p>Your data is protected with industry-standard security</p>
+  </div>
+</div>
+{% endblock %}
